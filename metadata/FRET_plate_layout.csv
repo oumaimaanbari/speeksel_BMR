@@ -1,7 +1,7 @@
 Well,Type,Sample,Condition,Conc
-A01,Blank,PBS,NA,0
-A02,Blank,PBS,NA,0
-A03,Blank,PBS,NA,0
+A01,Blank,PBS,NA,NA
+A02,Blank,PBS,NA,NA
+A03,Blank,PBS,NA,NA
 B01,Control,Trypsin,NA,NA
 B02,Control,Trypsin,NA,NA
 B03,Control,Trypsin,NA,NA
