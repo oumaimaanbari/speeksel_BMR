@@ -72,30 +72,38 @@ donors <- samples[str_starts(samples, "Donor")]
 for (donor in donors) {
   message("Plotting for:  ", donor)
   
-  plot_summary <- fret_plot %>% 
-    filter(Sample %in% c(donor, "PBS", "Trypsin"))
+  conc <- fret_plot %>% 
+    filter(Sample == donor) %>%
+    pull(Conc) %>%
+    unique()
   
-  plot <- ggplot(plot_summary,
-  aes(Time_min, mean_RFU, colour = Sample_label)) +
-  geom_line() +
-  geom_point() +
-  geom_errorbar(aes(ymin = mean_RFU - sd_RFU, ymax = mean_RFU + sd_RFU), 
-                width = 0.3, alpha = 0.5) + 
-  geom_ribbon(aes(ymin = mean_RFU - sd_RFU, ymax = mean_RFU + sd_RFU, fill = Sample_label),
-              alpha = 0.1, colour = NA) +
-  theme_minimal() + 
-  facet_wrap(~Conc) +
-  labs(
-    title = paste0("FRET assay ", donor),
-    subtitle = "Centrifuged vs Uncentrifuged, incl PBS and Trypsin controls",
-    x = "Time (minutes)",
-    y = "Mean relative fluorescence units (RFU)"
-  )
-  
-  ggsave(
-    filename = paste0("output/figures/FRET_", donor, ".png"), 
-    plot = plot
-  )
+  for (c in conc) {
+    
+    plot_summary <- fret_plot %>% 
+      filter(Sample %in% c(donor, "PBS", "Trypsin"),
+             Conc == c | is.na(Conc))
+    
+    plot <- ggplot(plot_summary,
+    aes(Time_min, mean_RFU, colour = Sample_label)) +
+    geom_line() +
+    geom_point() +
+    geom_errorbar(aes(ymin = mean_RFU - sd_RFU, ymax = mean_RFU + sd_RFU), 
+                  width = 0.3, alpha = 0.5) + 
+    geom_ribbon(aes(ymin = mean_RFU - sd_RFU, ymax = mean_RFU + sd_RFU, fill = Sample_label),
+                  alpha = 0.1, colour = NA) +
+    theme_minimal() +
+    labs(
+      title = paste0("FRET assay ", donor, " (Protein concentration: ", c, " µg/mL)"),
+      subtitle = "Centrifuged vs Uncentrifuged, incl PBS and Trypsin controls",
+      x = "Time (minutes)",
+      y = "Mean relative fluorescence units (RFU)"
+    )
+    
+    ggsave(
+      filename = paste0("output/figures/FRET_", donor, "_", c, ".png"), 
+      plot = plot
+    )
+  }
 }
 
 
