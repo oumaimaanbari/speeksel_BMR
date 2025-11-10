@@ -1,6 +1,6 @@
 #!/usr/bin/env
-## This scripnt can  be used to automize the results of the BCA assay.
-## Input = 96-well plate CSV file | Output = CSV file with total protein concentration per donor
+## This script can  be used to automize the results of the BCA assay.
+## Input = 96-well plate TSV file decimal ","| Output = CSV file with total protein concentration per donor
 
 # ---- Step 1 Preparations ----
 
@@ -10,9 +10,19 @@ library(stringr)
 
 # Load necessary files
 
-data_path <- readline(prompt = "File path to raw data (e.g. raw_data/test.csv): ")
+file_name <- readline(prompt = "File name (e.g. BCA_2810.tsv) ")
 
-plate_data <- read.csv(data_path)
+if (!file.exists(paste0("raw_data/BCA/", file_name))) {
+  stop(file_name, " File not found!")
+}
+
+plate_data <- read_tsv(paste0("raw_data/FRET/", file_name),
+                       skip = 3,
+                       locale = locale(decimal_mark = ","),
+                       col_names = TRUE)
+names(plate_data)[1:2] <- c("Well", "Abs")
+plate_data <- plate_data %>% select(-last_col())
+
 plate_layout <- read_csv("metadata/BCA_plate_layout")
 output_file <- "data/total_protein_donors.csv"
 
