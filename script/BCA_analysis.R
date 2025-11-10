@@ -115,7 +115,7 @@ for (donor in donors) {
   
   print(donor_data)
   
-  chosen_dil <- readline(prompt = paste0("Choose best dilution for ", donor, " (5/10/20):"))
+  chosen_dil <- readline(prompt = paste0("Choose best dilution for ", donor, " (2.5/5/10):"))
   
   chosen_summary <- summary %>%
   filter(Sample == donor, Dilution == chosen_dil) %>%
