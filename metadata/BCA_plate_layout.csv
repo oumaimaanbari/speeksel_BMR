@@ -80,6 +80,6 @@ F12,Sample,Donor3,Centrifuged,NA,10
 H07,Control,PBS_Saliva,Uncentrifuged,NA,NA
 H08,Control,PBS_Saliva,Uncentrifuged,NA,NA
 H09,Control,PBS_Saliva,Uncentrifuged,NA,NA
-H10,Control,Alpha-amylase,NA,150,NA
-H11,Control,Alpha-amylase,NA,150,NA
-H12,Control,Alpha-amylase,NA,150,NA
+H10,Control,Alpha-amylase,NA,250,NA
+H11,Control,Alpha-amylase,NA,250,NA
+H12,Control,Alpha-amylase,NA,250,NA
