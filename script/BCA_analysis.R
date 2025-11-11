@@ -16,14 +16,14 @@ if (!file.exists(paste0("raw_data/BCA/", file_name))) {
   stop(file_name, " File not found!")
 }
 
-plate_data <- read_tsv(paste0("raw_data/FRET/", file_name),
-                       skip = 3,
+plate_data <- read_tsv(paste0("raw_data/BCA/", file_name),
+                       skip = 4,
                        locale = locale(decimal_mark = ","),
                        col_names = TRUE)
 names(plate_data)[1:2] <- c("Well", "Abs")
 plate_data <- plate_data %>% select(-last_col())
 
-plate_layout <- read_csv("metadata/BCA_plate_layout")
+plate_layout <- read_csv("metadata/BCA_plate_layout.csv")
 output_file <- "data/total_protein_donors.csv"
 
 # Couple results to plate layout
